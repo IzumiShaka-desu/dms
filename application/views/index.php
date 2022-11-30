@@ -32,6 +32,7 @@
   							<th class="text-center" style="width: 15%;">No Seri</th>
   							<th class="text-center" style="width: 15%;">No Perizinan</th>
   							<th class="text-center" style="width: 15%;">Expired Date</th>
+  							<th class="text-center" style="width: 15%;">Status</th>
   							<th class="text-center" style="width: 15%;">Action</th>
 
   						</tr>
@@ -54,10 +55,34 @@
   								<td class="d-none d-sm-table-cell">
   									<span class="badge badge-primary"><?php echo $item['expired_date']; ?></span>
   								</td>
+  								<td class="d-none d-sm-table-cell">
+  									<?php
+										switch ($item['status']) {
+											case 'active':
+												echo '<span class="badge badge-success">Aktif</span>';
+												break;
+											case 'processing':
+												echo '<span class="badge badge-warning">Sedang diproses</span>';
+												break;
+											case 'expired':
+												echo '<span class="badge badge-danger">Tidak Aktif</span>';
+												break;
+										}
+
+										?>
+  								</td>
+
   								<td class="text-center">
-  									<button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" title="View Customer">
-  										<i class="fa fa-user"></i>
+  									<!-- create button for upload when click it will show modal to upload pdf and save by index of documents -->
+  									<button type="button" class="btn btn-sm btn-primary" data-id="<?php echo $item['id_document']; ?>" data-name="<?php echo $item['nama_alat']; ?>" data-toggle="modal" data-target="#modal-block-upload">
+  										<i class="fa fa-upload"></i>
   									</button>
+  									<!-- create button for download if $item['filename'] is not empty or null -->
+  									<?php if ($item['filename'] != null || $item['filename'] !== '') { ?>
+  										<a href="<?php echo base_url('uploads/' . $item['filename']); ?>" class="btn btn-sm btn-primary" download>
+  											<i class="fa fa-download"></i>
+  										</a>
+  									<?php } ?>
   								</td>
   							</tr>
   						<?php
@@ -65,9 +90,36 @@
   					</tbody>
   				</table>
   			</div>
-  		</div>
-  	</div>
-  	<!-- END Page Content -->
+  			<!-- modal for upload file by index of documents  -->
+  			<!-- using post url 'upload/:id' -->
+  			<div class="modal" id="modal-block-upload" tabindex="-1" role="dialog" aria-labelledby="modal-block-upload" aria-hidden="true">
+  				<div class="modal-dialog modal-dialog-top modal-lg" role="document">
+  					<div class="modal-content">
+  						<form action="<?php echo base_url('upload'); ?>" id="form-modal-upload" method="post" enctype="multipart/form-data">
+  							<div class="block block-themed block-transparent mb-0">
+  								<div class="block-header bg-primary-dark">
+  									<h3 class="block-title">Upload File</h3>
+  									<div class="block-options">
+  										<button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+  											<i class="fa fa-fw fa-times"></i>
+  										</button>
+  									</div>
+  								</div>
+  								<div class="block-content">
+  									<divxw class="form-group">
+  										<label for="example-file-input">File</label>
+  										<input type="file" id="example-file-input" name="file">
+  								</div>
+  							</div>
+  							<div class="block-content block-content-full text-right border-top">
+  								<button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
+  								<button type="submit" class="btn btn-sm btn-primary" id="btn-modal-upload-document"><i class="fa fa-check mr-1"></i>Save</button>
+  							</div>
+  						</form>
+  					</div>
+  				</div>
+  				<!-- END Page Content -->
+
 
   </main>
   -->
