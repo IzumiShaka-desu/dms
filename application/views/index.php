@@ -1,5 +1,5 @@
   <!-- Main Container -->
-  <main id="main-container">
+  <main id="main-container" style="min-height: 2130px;">
   	<div class="bg-image bg-image-bottom" style="background-image: url('assets/media/photos/photo34@2x.jpg');">
   		<div class="bg-primary-dark-op">
   			<div class="content content-top text-center overflow-hidden">
@@ -11,7 +11,7 @@
   		</div>
   	</div>
   	<div class="content">
-  		<h2 class="content-heading">DataTables Plugin</h2>
+  		<h2 class="content-heading">Documents Management</h2>
 
 
   		<!-- Dynamic Table Full -->
