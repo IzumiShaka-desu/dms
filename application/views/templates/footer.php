@@ -59,30 +59,74 @@
 
 	function refreshDataTable() {
 		$("#DataTables_Table_0").DataTable().clear().draw();
-		let usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date"];
+		let usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date", "status"];
 
 		dataTableRows.forEach(function callback(row, index) {
 			//usinf datatable add every row
 			var cells = [(index + 1)];
 			usedRows.forEach((key) => {
-				if (typeof(row[key]) === 'undefined') {
+				if (key === "status") {
+					if (row[key] === 'active') {
+						//create option for active and processing status
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">dalam proses</option></select>');
+					} else {
+						cells.push("<span class='badge badge-danger'> Tidak Aktif </span>");
+					}
+				} else if (typeof(row[key]) === 'undefined') {
 					cells.push("");
 				} else {
 					cells.push(row[key]);
-
 				}
-
-			})
+			});
 			// add icon button to delete row using jquery $("table tr:eq(2)").remove();
 			cells.push("<button class='btn btn-danger btn-sm' onClick='deleteThisRow(" + index + ")'><i class='fa fa-trash'></i></button>");
 
 			$("#DataTables_Table_0").DataTable().row.add(cells).draw();
-		})
+		});
+	}
+
+	function updateStatus(index) {
+		dataTableRows[index].status = $("#status-" + index).val();
+		console.log(dataTableRows[index]);
+	}
+
+	function onUploadFile() {
+		var file = document.getElementById("file").files[0];
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			var data = e.target.result;
+			var workbook = XLSX.read(data, {
+				type: 'binary'
+			});
+			workbook.SheetNames.forEach(function(sheetName) {
+				// Here is your object
+				var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+				var json_object = JSON.stringify(XL_row_object);
+				mapOfSheet[sheetName] = json_object;
+			})
+			// console.log(mapOfSheet);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"]));
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].nama_alat);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].pabrik_pembuat);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].kapasitas);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].lokasi);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].no_seri);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].no_perijinan);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].expired_date);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].status);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].keterangan);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].file);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].file_name);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].file_type);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].file_size);
+			// console.log(JSON.parse(mapOfSheet["Sheet1"])[0].file_path);
+			//
+		}
 	}
 
 	function refreshDataTableAdd() {
 		$("#DataTables_Table_0").DataTable().clear().draw();
-		let usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date"];
+		let usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date", "status"];
 		//create row with forms inside it and in column action add button to add row
 		var formsCell = ["", "<input type='text' class='form-control' name='nama_alat' id='nama_alat' placeholder='Nama Alat'>",
 			"<input type='text' class='form-control' name='pabrik_pembuat' id='pabrik_pembuat' placeholder='Pabrik Pembuat'>",
@@ -91,6 +135,7 @@
 			"<input type='text' class='form-control' name='no_seri' id='no_seri' placeholder='No Seri'>",
 			"<input type='text' class='form-control' name='no_perijinan' id='no_perijinan' placeholder='No Perijinan'>",
 			"<input type='text' class='form-control' name='expired_date' id='expired_date' placeholder='contoh: 2022/11/20'>",
+			" ",
 			"<button class='btn btn-success btn-sm' onClick='addThisRow()'><i class='fa fa-plus'></i></button>"
 		];
 		$("#DataTables_Table_0").DataTable().row.add(formsCell).draw();
@@ -99,14 +144,20 @@
 			//usinf datatable add every row
 			var cells = [(index + 1)];
 			usedRows.forEach((key) => {
-				if (typeof(row[key]) === 'undefined') {
+				if (key === "status") {
+					if (row[key] === 'active') {
+						//create option for active and processing status
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">dalam proses</option></select>');
+					} else {
+						cells.push("<span class='badge badge-danger'> Tidak Aktif </span>");
+					}
+				} else if (typeof(row[key]) === 'undefined') {
 					cells.push("");
 				} else {
 					cells.push(row[key]);
-
 				}
 
-			})
+			});
 			// add icon button to delete row using jquery $("table tr:eq(2)").remove();
 			cells.push("<button class='btn btn-danger btn-sm' onClick='deleteThisRow(" + index + ")'><i class='fa fa-trash'></i></button>");
 
@@ -123,6 +174,16 @@
 		var no_seri = $("#no_seri").val();
 		var no_perijinan = $("#no_perijinan").val();
 		var expired_date = $("#expired_date").val();
+		var date = new Date(expired_date);
+		var status = 'active';
+		let today = new Date();
+		today.setHours(0, 0, 0, 0);
+		if (date < today) {
+			status = 'expired';
+		} else {
+			status = 'active';
+		}
+
 		//add data to array
 		dataTableRows.push({
 			nama_alat: nama_alat,
@@ -131,7 +192,8 @@
 			lokasi: lokasi,
 			no_seri: no_seri,
 			no_perijinan: no_perijinan,
-			expired_date: expired_date
+			expired_date: expired_date,
+			status: status
 		});
 		//refresh datatable
 		refreshDataTableAdd();
@@ -154,6 +216,15 @@
 		} else {
 			// refreshDataTable();
 		}
+		$('#modal-block-upload').on('show.bs.modal', function(event) {
+			var button = $(event.relatedTarget) // Button that triggered the modal
+			var id = button.data('id') // Extract info from data-* attributes
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			var modal = $(this)
+			// modal.find('.modal-title').text('New message to ' + recipient)
+			$('#form-modal-upload').attr('action', '<?php echo base_url('upload/') ?>' + id);
+		})
 
 		$('#file').change(function(e) {
 			var files = e.target.files,
@@ -182,6 +253,16 @@
 
 						}
 						newobj['expired_date'] = newobj['__empty_1'] + "/" + newobj['__empty'] + "/" + newobj['expired'];
+						var date = new Date(newobj['__empty_1'], newobj['__empty'] - 1, newobj['expired']);
+						newobj['date'] = date;
+						newobj['status'] = 'aktif';
+						let today = new Date();
+						today.setHours(0, 0, 0, 0);
+						if (date < today) {
+							newobj['status'] = 'expired';
+						} else {
+							newobj['status'] = 'active';
+						}
 						rows.push(newobj);
 					})
 
@@ -227,31 +308,12 @@
 			//load rows to table
 			var usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date"];
 			refreshDataTable();
-			// rows.forEach(function callback(row, index) {
-			//usinf datatable add every row
-
-
-			// html_table_body_content += "<tr>";
-			// html_table_body_content += "<td>" + (index + 1) + "</td>";
-			// usedRows.forEach((key) => {
-			// 	if (typeof(row[key]) === 'undefined') {
-
-			// 		html_table_body_content += "<td></td>";
-			// 	} else {
-			// 		html_table_body_content += "<td>" + row[key] + "</td>";
-
-			// 	}
-
-			// })
-			// // add icon button to delete row using jquery $("table tr:eq(2)").remove();
-			// html_table_body_content += "<td><button class='btn btn-danger btn-sm' onClick='deleteThisRow(" + index + ")'><i class='fa fa-trash'></i></button></td>";
-			// html_table_body_content += "</tr>";
 		})
 		// on import-table click then post json from datatable to server
 		$('#import-table').click(function() {
 			console.log(dataTableRows);
 			var jsonObjects = [];
-			var usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date"];
+			var usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date", "status"];
 			dataTableRows.forEach(function callback(row, index) {
 				var jsonObject = {};
 				usedRows.forEach((key) => {
