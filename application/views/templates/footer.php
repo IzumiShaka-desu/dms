@@ -52,8 +52,6 @@
 <script src="assets/js/pages/be_tables_datatables.min.js"></script>
 <script src="assets/js/xlsx.full.min.js"></script>
 <script>
-	// console.log(<?php echo isset($is_add_documents) ? $is_add_documents : 'false'; ?>);
-	// console.log(('<?php echo $is_add_documents; ?>' === 'true'));
 	var isAddDocuments = '<?php echo isset($is_add_documents) ? $is_add_documents : 'false'; ?>' === 'true';
 	var mapOfSheet = {};
 	var dataTableRows = [];
@@ -154,7 +152,7 @@
 		if (isAddDocuments == true) {
 			refreshDataTableAdd();
 		} else {
-			refreshDataTable();
+			// refreshDataTable();
 		}
 
 		$('#file').change(function(e) {
