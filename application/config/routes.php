@@ -58,3 +58,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['home'] = 'document';
 $route['imports'] = 'document/imports';
 $route['add'] = 'document/add';
+$route['upload/(:any)'] = 'document/upload/$1';
