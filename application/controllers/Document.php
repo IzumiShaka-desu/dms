@@ -48,6 +48,7 @@ class Document extends CI_Controller
 					'no_seri' => isset($data[$i]['no_seri']) ? $data[$i]['no_seri'] : '',
 					'no_perijinan' => isset($data[$i]['no_perijinan']) ? $data[$i]['no_perijinan'] : '',
 					'expired_date' => isset($data[$i]['expired_date']) ? $data[$i]['expired_date'] : '',
+					'status' => isset($data[$i]['status']) ? $data[$i]['status'] : '',
 				];
 			}
 			// foreach ($data as $key => $value) {
@@ -80,6 +81,29 @@ class Document extends CI_Controller
 		$this->load->view('templates/nav');
 		$this->load->view('add',);
 		$this->load->view('templates/footer', $data);
+	}
+	public function upload($id)
+	{
+		// upload file then set file name to database using  setFilenameBy function on model
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx';
+		$config['max_size'] = 10000;
+		$config['max_width'] = 10240;
+		$config['max_height'] = 7680;
+		$this->load->library('upload', $config);
+		// $this->upload->initialize($config);
+		if (!$this->upload->do_upload('file')) {
+			$error = array('error' => $this->upload->display_errors());
+			//reload to root page
+			echo $error['error'];
+			echo "<script>alert('Upload gagal!');window.location.href='" . base_url() . "';</script>";
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+			// set file name to database
+			$this->m_documents->setFilenameBy($id, $data['upload_data']['file_name']);
+			//reload to root page
+			echo "<script>alert('Upload berhasil!');window.location.href='" . base_url() . "';</script>";
+		}
 	}
 
 	// public function view($slug = NULL) {
