@@ -57,8 +57,8 @@
 								<th class="text-center" style="width: 15%;">No Seri</th>
 								<th class="text-center" style="width: 15%;">No Perizinan</th>
 								<th class="text-center" style="width: 15%;">Expired Date</th>
+								<th class="text-center" style="width: 15%;">Status</th>
 								<th class="text-center" style="width: 15%;">Action</th>
-
 							</tr>
 						</thead>
 						<tbody>
