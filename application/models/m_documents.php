@@ -52,4 +52,10 @@ class M_documents extends CI_Model
 		$this->db->where('id_document', $id);
 		return $this->db->delete('document');
 	}
+	public function setFilenameBy($id, $filename)
+	{
+		$this->db->where('id_document', $id);
+		$this->db->set('filename', $filename);
+		return $this->db->update('document');
+	}
 }
