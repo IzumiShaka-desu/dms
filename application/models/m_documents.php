@@ -1,9 +1,5 @@
-<!-- create document models with table name document -->
-<!-- create document controller with index, add, import, view, create, edit, delete -->
-<!-- document have id_document,nama_alat,pabrik,kapasistas,lokasi,no_seri,no_perijinan,expired_date -->
 
 <?php
-
 class M_documents extends CI_Model
 {
 	public function __construct()
@@ -75,11 +71,28 @@ class M_documents extends CI_Model
 		$this->db->set('filename', $filename);
 		return $this->db->update('document');
 	}
+	public function produceExpiredDocumentSample()
+	{
+		//insert sample data with expired_date is 90 days from now
+		$expired_date = date('Y-m-d', strtotime('+90 days'));
+		$data = array(
+			'nama_alat' => 'Sample Alat',
+			'pabrik_pembuat' => 'Sample Pabrik',
+			'kapasitas' => 'Sample Kapasistas',
+			'lokasi' => 'Sample Lokasi',
+			'no_seri' => 'Sample No Seri',
+			'no_perijinan' => 'Sample No Perijinan',
+			'expired_date' => $expired_date,
+			'status' => 'active',
+			'filename' => 'sample.pdf'
+		);
+		return $this->db->insert('document', $data);
+	}
 	public function getDocumentsForReminders()
 	{
 		$this->db->from('document');
 		$this->db->where('status', 'active');
-		$this->db->where('expired_date =', date('Y-m-d', strtotime('+3 month')));
+		$this->db->where('expired_date =', date('Y-m-d', strtotime('+90 days')));
 		$this->db->order_by('id_document', 'DESC');
 		$query = $this->db->get();
 		return $query->result_array();
