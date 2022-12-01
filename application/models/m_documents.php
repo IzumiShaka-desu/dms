@@ -52,10 +52,36 @@ class M_documents extends CI_Model
 		$this->db->where('id_document', $id);
 		return $this->db->delete('document');
 	}
+	public function flip_status($id)
+	{
+		//flip status if active then processing and vice versa
+		$this->db->where('id_document', $id);
+		$this->db->select('status');
+		$query = $this->db->get('document');
+		$result = $query->result_array();
+		$status = $result[0]['status'];
+		if ($status == 'active') {
+			$status = 'processing';
+		} else {
+			$status = 'active';
+		}
+		$this->db->where('id_document', $id);
+		$this->db->set('status', $status);
+		return $this->db->update('document');
+	}
 	public function setFilenameBy($id, $filename)
 	{
 		$this->db->where('id_document', $id);
 		$this->db->set('filename', $filename);
 		return $this->db->update('document');
+	}
+	public function getDocumentsForReminders()
+	{
+		$this->db->from('document');
+		$this->db->where('status', 'active');
+		$this->db->where('expired_date =', date('Y-m-d', strtotime('+3 month')));
+		$this->db->order_by('id_document', 'DESC');
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 }
