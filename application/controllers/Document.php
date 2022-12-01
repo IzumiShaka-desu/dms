@@ -110,6 +110,61 @@ class Document extends CI_Controller
 			echo "<script>alert('Upload berhasil!');window.location.href='" . base_url() . "';</script>";
 		}
 	}
+	public function produceExpiredDocumentSample()
+	{
+		return	$this->m_documents->produceExpiredDocumentSample();
+	}
+
+	public function webhook_reminder()
+	{
+		// get data for reminder from database
+		$data = $this->m_documents->getDocumentsForReminders();
+		// var_dump($data);
+		// set count of reminders data
+		$count = count($data);
+		// if count is less than 1, return false
+
+		if ($count < 1) {
+			echo json_encode(
+				[
+					"status" => "failed",
+					"message" => "no data found"
+				]
+			);
+			return;
+		}
+
+
+
+		$config = array(
+			'protocol'  => 'smtp',
+			'smtp_host' => 'mail.incoe.astra.co.id',
+			'smtp_port' => 25,
+			'smtp_user' => 'no-reply@incoe.astra.co.id',
+			'smtp_pass' => 'just4unme',
+			'mailtype'  => 'html',
+			'charset'   => 'iso-8859-1'
+		);
+		$url = base_url();
+
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$this->email->from('no-reply@incoe.astra.co.id', 'Document Expired Reminder');
+
+		// $this->email->to('nitawulandari215@gmail.com','lukymulana@gmail.com');
+		$message = "Dear User,";
+		$this->email->to('shakaaji29@gmail.com');
+		$message .= "<br>";
+		$message .= "We want to inform you that there are " . $count . " documents will expired in 3 month.";
+		$message .= "<br><br>";
+		$message .= "Please check your document list in this link : <a href='" . $url . "'>Document List</a>";
+		$message .= "<br><br>";
+		$message .= "Thanks";
+		$message .= "<br>Admin";
+		$this->email->subject($count . ' Document will Expired in 3 Month');
+		$this->email->message($message);
+		$this->email->send();
+	}
 
 	// public function view($slug = NULL) {
 	// 	$data['document_item'] = $this->Document_model->get_documents($slug);
