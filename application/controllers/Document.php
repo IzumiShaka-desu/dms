@@ -74,6 +74,11 @@ class Document extends CI_Controller
 			$this->load->view('templates/footer');
 		}
 	}
+	public function flip_status($id)
+	{
+		$this->m_documents->flip_status($id);
+		echo "<script>window.location.href='" . base_url() . "';</script>";
+	}
 	public function add()
 	{
 		$data["is_add_documents"] = 'true';
