@@ -137,7 +137,7 @@
 			"<input type='text' class='form-control' name='lokasi' id='lokasi' placeholder='Lokasi'>",
 			"<input type='text' class='form-control' name='no_seri' id='no_seri' placeholder='No Seri'>",
 			"<input type='text' class='form-control' name='no_perijinan' id='no_perijinan' placeholder='No Perijinan'>",
-			"<input type='date' class='form-control' data-date='' data-date-format='YYYY/MM/DD' value='2022-10-10' name='expired_date' id='expired_date' placeholder='2022/11/20'>",
+			"<input type='date' class='form-control' data-date='' data-date-format='YYYY/MM/DD' name='expired_date' id='expired_date' placeholder='2022/11/20'>",
 			" ",
 			"<button class='btn btn-success btn-sm' onClick='addThisRow()'><i class='fa fa-plus'></i></button>"
 		];
