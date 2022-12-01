@@ -68,7 +68,10 @@
 				if (key === "status") {
 					if (row[key] === 'active') {
 						//create option for active and processing status
-						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">dalam proses</option></select>');
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">Diproses</option></select>');
+					} else if (row[key] === 'processing') {
+						//create option for active and processing status
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active">Aktif</option><option value="processing" selected>Diproses</option></select>');
 					} else {
 						cells.push("<span class='badge badge-danger'> Tidak Aktif </span>");
 					}
@@ -147,7 +150,10 @@
 				if (key === "status") {
 					if (row[key] === 'active') {
 						//create option for active and processing status
-						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">dalam proses</option></select>');
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active" selected>Aktif</option><option value="processing">Diproses</option></select>');
+					} else if (row[key] === 'processing') {
+						//create option for active and processing status
+						cells.push('<select class="form-control" id="status-' + index + '" onchange="updateStatus(' + index + ')"><option value="active">Aktif</option><option value="processing" selected>Diproses</option></select>');
 					} else {
 						cells.push("<span class='badge badge-danger'> Tidak Aktif </span>");
 					}
@@ -220,6 +226,8 @@
 		} else {
 			// refreshDataTable();
 		}
+		$('[data-toggle="tooltip"]').tooltip();
+
 		$('#modal-block-upload').on('show.bs.modal', function(event) {
 			var button = $(event.relatedTarget) // Button that triggered the modal
 			var id = button.data('id') // Extract info from data-* attributes
