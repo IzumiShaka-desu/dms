@@ -9,6 +9,10 @@ class Document extends CI_Controller
 	}
 	public function index()
 	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
 		// det documents data
 		$data['documents'] = $this->m_documents->get_documents();
 		$this->load->view('templates/header');
@@ -20,6 +24,10 @@ class Document extends CI_Controller
 	}
 	public function imports()
 	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
 		// check if it's a post request
 		// if this is a post request then get json data from ajax post
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
@@ -76,11 +84,19 @@ class Document extends CI_Controller
 	}
 	public function flip_status($id)
 	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
 		$this->m_documents->flip_status($id);
 		echo "<script>window.location.href='" . base_url() . "';</script>";
 	}
 	public function add()
 	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
 		$data["is_add_documents"] = 'true';
 		$this->load->view('templates/header');
 		$this->load->view('templates/nav');
@@ -89,6 +105,10 @@ class Document extends CI_Controller
 	}
 	public function upload($id)
 	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
 		// upload file then set file name to database using  setFilenameBy function on model
 		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx';
