@@ -57,6 +57,7 @@
 	var dataTableRows = [];
 
 
+
 	function refreshDataTable() {
 		$("#DataTables_Table_0").DataTable().clear().draw();
 		let usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date", "status"];
@@ -226,6 +227,7 @@
 		} else {
 			// refreshDataTable();
 		}
+
 		$('[data-toggle="tooltip"]').tooltip();
 
 		$('#modal-block-upload').on('show.bs.modal', function(event) {
