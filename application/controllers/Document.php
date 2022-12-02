@@ -177,7 +177,28 @@ class Document extends CI_Controller
 		$message .= "<br>";
 		$message .= "We want to inform you that there are " . $count . " documents will expired in 3 month.";
 		$message .= "<br><br>";
-		$message .= "Please check your document list in this link : <a href='" . $url . "'>Document List</a>";
+		$message .= "Please check the list below : ";
+		$message .= "<br><br>";
+		$message .= "<table border='1' style='border-collapse: collapse;'>";
+		$message .= "<tr>";
+		$message .= "<th>No</th>";
+		$message .= "<th>Document Name</th>";
+		$message .= "<th>Expired Date</th>";
+		$message .= "<th>Link</th>";
+		$message .= "</tr>";
+		$no = 1;
+		foreach ($data as $key => $value) {
+			$message .= "<tr>";
+			$message .= "<td>" . $no . "</td>";
+			$message .= "<td>" . $value['nama_alat'] . "</td>";
+			$message .= "<td>" . $value['expired_date'] . "</td>";
+			$message .= "<td>" . $url . "uploads/" . $value['filename'] . "</td>";
+			$message .= "</tr>";
+			$no++;
+		}
+		$message .= "</table>";
+		$message .= "<br><br>";
+		$message .= "or you can check full document list in this link : <a href='" . $url . "'>Document List</a>";
 		$message .= "<br><br>";
 		$message .= "Thanks";
 		$message .= "<br>Admin";
