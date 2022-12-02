@@ -24,7 +24,18 @@
  				<h3 class="block-title">Documents<small></small></h3>
  			</div>
  			<div class="block-content block-content-full">
+ 				<div class="col-12">
+ 					<br>
+ 				</div>
+ 				<!-- create tombol import to database on right side -->
+ 				<div class="col-12 text-right">
+ 					<button type="button" class="btn btn-alt-primary" id="exports-table">Exports All</button>
+ 					<!-- create whitespace -->
 
+ 				</div>
+ 				<div class="col-12">
+ 					<br>
+ 				</div>
  				<!-- DataTables functionality is initialized with .js-dataTable-full class in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
  				<table class="table table-bordered table-striped table-vcenter js-dataTable-full">
  					<thead>
