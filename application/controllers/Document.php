@@ -22,6 +22,33 @@ class Document extends CI_Controller
 		// $this->load->view('index');
 		// echo 'Hello World!';
 	}
+	public function exports()
+	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
+		// det documents data
+
+
+
+		$listOfDocument = $this->m_documents->get_data_for_exports();
+		//  format all Expired Date in listOfDocument from yyyy-mm-dd to yyyy/mm/dd
+		foreach ($listOfDocument as $key => $value) {
+			$listOfDocument[$key]['Expired Date'] = str_replace('-', '/', $listOfDocument[$key]['Expired Date']);
+		}
+
+		//echoing import javascript XLSX library 
+		// echo "<script src='assets/js/xlsx.full.min.js'></script>";
+		// //then using xlsx utils to convert json to excel
+		// echo "<script>var data = " . json_encode($data['documents']) . ";"
+		// 	. "var ws = XLSX.utils.json_to_sheet(data);"
+		// 	. "var wb = XLSX.utils.book_new();"
+		// 	. "XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');"
+		// 	. "XLSX.writeFile(wb, 'data.xlsx');</script>";
+		// returns $data['documents'] as json
+		echo json_encode($listOfDocument);
+	}
 	public function imports()
 	{
 		// if user not loggin redirect to login page
@@ -175,7 +202,7 @@ class Document extends CI_Controller
 		$message = "Dear User,";
 		$this->email->to('shakaaji29@gmail.com');
 		$message .= "<br>";
-		$message .= "We want to inform you that there are " . $count . " documents will expired in 3 month.";
+		$message .= "We want to inform you that there are " . $count . " documents will expired.";
 		$message .= "<br><br>";
 		$message .= "Please check the list below : ";
 		$message .= "<br><br>";
@@ -202,7 +229,7 @@ class Document extends CI_Controller
 		$message .= "<br><br>";
 		$message .= "Thanks";
 		$message .= "<br>Admin";
-		$this->email->subject($count . ' Document will Expired in 3 Month');
+		$this->email->subject($count . ' Document will Expired');
 		$this->email->message($message);
 		$this->email->send();
 	}
