@@ -254,20 +254,43 @@
 					// console.log(sheetName.toLowerCase().includes('all'));
 					// if (sheetName.toLowerCase().includes('all')) {
 					// Here is your object
-					var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+					var XL_row_object = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 					var json_object = JSON.stringify(XL_row_object);
+					console.log(XL_row_object);
 					var rows = [];
 					XL_row_object.forEach((obj) => {
 						var newobj = {}
 						var key, keys = Object.keys(obj);
 						var n = keys.length;
 						while (n--) {
+							console.log(keys[n] + ':' + obj[keys[n]]);
 							key = keys[n];
-							newobj[key.toLowerCase().trim().replace(" ", "_")] = obj[key];
+							newobj[key.toLowerCase().trim().replace(" ", "_")] = obj[key].toString();
 
 						}
-						newobj['expired_date'] = newobj['__empty_1'] + "/" + newobj['__empty'] + "/" + newobj['expired'];
-						var date = new Date(newobj['__empty_1'], newobj['__empty'] - 1, newobj['expired']);
+						var serial = newobj['expired_date'];
+						// newobj['expired_date'] = newobj['__empty_1'] + "/" + newobj['__empty'] + "/" + newobj['expired'];
+						var utc_days = Math.floor(serial - 25569);
+						var utc_value = utc_days * 86400;
+						var date_info = new Date(utc_value * 1000);
+
+						var fractional_day = serial - Math.floor(serial) + 0.0000001;
+
+						var total_seconds = Math.floor(86400 * fractional_day);
+
+						var seconds = total_seconds % 60;
+
+						total_seconds -= seconds;
+
+						var hours = Math.floor(total_seconds / (60 * 60));
+						var minutes = Math.floor(total_seconds / 60) % 60;
+
+						var date = new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+						// assign date as yyyy/mm/dd string to newobj expired_date
+						newobj['expired_date'] = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+
+						// var date = new Date(newobj['expired_date']);
 						newobj['date'] = date;
 						newobj['status'] = 'aktif';
 						let today = new Date();
@@ -354,6 +377,25 @@
 				}
 			});
 
+		});
+		// when id="exports-table" clicked then get json from <?php echo base_url('document/exports'); ?> and export to excel using XLSX utils
+		$('#exports-table').click(function() {
+			$.ajax({
+				url: 'document/exports',
+				type: 'GET',
+				//specify dataType to json
+				dataType: 'json',
+				success: function(data) {
+					console.log(data);
+					// alert('success');
+					//then locate to root path /
+					var wb = XLSX.utils.book_new();
+					var ws = XLSX.utils.json_to_sheet(data);
+					XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+					//write with name document-export-<current date>.xlsx
+					XLSX.writeFile(wb, "document-export-" + new Date().toISOString().slice(0, 10) + ".xlsx");
+				}
+			});
 		});
 
 	});
