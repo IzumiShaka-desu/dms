@@ -69,7 +69,18 @@
  								<td class="d-none d-sm-table-cell"><?php echo $item['no_perijinan']; ?></td>
 
  								<td class="d-none d-sm-table-cell">
- 									<span class="badge badge-primary"><?php echo $item['expired_date']; ?></span>
+ 									<!-- if status expired show date iwth badge danger  else primary  when expired this will go to notify/:id  -->
+ 									<?php
+										if ($item['status'] == 'expired') {
+											// its will go to notify/:id
+											echo '<a href="' . base_url('notify/' . $item['id_document']) . '">';
+											echo '<span class="badge badge-danger">' . $item['expired_date'] . '</span>';
+											echo '</a>';
+										} else {
+											echo '<span class="badge badge-primary">' . $item['expired_date'] . '</span>';
+										}
+										?>
+
  								</td>
  								<td class="d-none d-sm-table-cell text-center">
  									<?php
