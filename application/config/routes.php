@@ -59,3 +59,4 @@ $route['home'] = 'document';
 $route['imports'] = 'document/imports';
 $route['add'] = 'document/add';
 $route['upload/(:any)'] = 'document/upload/$1';
+$route['notify/(:any)'] = 'document/sendExpiredEmailNotification/$1';
