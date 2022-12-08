@@ -22,6 +22,31 @@ class Document extends CI_Controller
 		// $this->load->view('index');
 		// echo 'Hello World!';
 	}
+	private function send_mail($data)
+	{
+		$config = array(
+			'protocol'  => 'smtp',
+			'smtp_host' => 'mail.incoe.astra.co.id',
+			'smtp_port' => 25,
+			'smtp_user' => 'no-reply@incoe.astra.co.id',
+			'smtp_pass' => 'just4unme',
+			'mailtype'  => 'html',
+			'charset'   => 'iso-8859-1'
+		);
+		$url = base_url();
+
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$name = '';
+		if (isset($data['name'])) {
+			$name = $data['name'];
+		}
+		$this->email->from('no-reply@incoe.astra.co.id', $name);
+		$this->email->to($data['to']);
+		$this->email->subject($data['subject']);
+		$this->email->message($data['message']);
+		return $this->email->send();
+	}
 	public function exports()
 	{
 		// if user not loggin redirect to login page
@@ -162,6 +187,34 @@ class Document extends CI_Controller
 		return	$this->m_documents->produceExpiredDocumentSample();
 	}
 
+	public function sendExpiredEmailNotification($idDocument)
+	{
+		// get data from database
+		$item = $this->m_documents->getDocumentById($idDocument);
+		$data = array();
+		$data['to'] = 'shakaaji29@gmail.com';
+		$data['subject'] = 'Document has Expired';
+		$data['name'] = 'Document has Expired';
+		$data['message'] = 'Dear User,';
+		$data['message'] .= '<br>';
+		$data['message'] .= 'Document with name ' . $item['nama_alat'] . ' has expired';
+		$data['message'] .= '<br>';
+		$data['message'] .= 'Please check your document';
+		$data['message'] .= '<br>';
+		$data['message'] .= 'Thank you';
+		$data['message'] .= '<br>';
+		$data['message'] .= 'Regards';
+		$data['message'] .= '<br>';
+		$data['message'] .= 'Admin';
+
+
+		// send email
+		if ($this->send_mail($data)) {
+			// show dialog success and redirect to root page
+			echo "<script>alert('Email berhasil dikirim!');window.location.href='" . base_url() . "';</script>";
+		};
+	}
+
 	public function webhook_reminder()
 	{
 		// get data for reminder from database
@@ -180,27 +233,10 @@ class Document extends CI_Controller
 			);
 			return;
 		}
-
-
-
-		$config = array(
-			'protocol'  => 'smtp',
-			'smtp_host' => 'mail.incoe.astra.co.id',
-			'smtp_port' => 25,
-			'smtp_user' => 'no-reply@incoe.astra.co.id',
-			'smtp_pass' => 'just4unme',
-			'mailtype'  => 'html',
-			'charset'   => 'iso-8859-1'
-		);
 		$url = base_url();
-
-		$this->load->library('email', $config);
-		$this->email->set_newline("\r\n");
-		$this->email->from('no-reply@incoe.astra.co.id', 'Document Expired Reminder');
-
-		// $this->email->to('nitawulandari215@gmail.com','lukymulana@gmail.com');
+		$to = 'shakaaji29@gmail.com';
+		$subject = $count . ' Document will Expired';
 		$message = "Dear User,";
-		$this->email->to('shakaaji29@gmail.com');
 		$message .= "<br>";
 		$message .= "We want to inform you that there are " . $count . " documents will expired.";
 		$message .= "<br><br>";
@@ -229,10 +265,45 @@ class Document extends CI_Controller
 		$message .= "<br><br>";
 		$message .= "Thanks";
 		$message .= "<br>Admin";
-		$this->email->subject($count . ' Document will Expired');
-		$this->email->message($message);
-		$this->email->send();
+
+		$name = 'Document Expired Reminder';
+		$data = array(
+			"to" => $to,
+			"subject" => $subject,
+			"message" => $message,
+			"name" => $name
+		);
+		$this->send_mail($data);
+
+		// $config = array(
+		// 	'protocol'  => 'smtp',
+		// 	'smtp_host' => 'mail.incoe.astra.co.id',
+		// 	'smtp_port' => 25,
+		// 	'smtp_user' => 'no-reply@incoe.astra.co.id',
+		// 	'smtp_pass' => 'just4unme',
+		// 	'mailtype'  => 'html',
+		// 	'charset'   => 'iso-8859-1'
+		// );
+
+		// $this->load->library('email', $config);
+		// $this->email->set_newline("\r\n");
+		// $this->email->from('no-reply@incoe.astra.co.id', $name);
+		// $this->email->to($to);
+
+		// $this->email->to('nitawulandari215@gmail.com','lukymulana@gmail.com');
+
+		// $this->email->subject($subject);
+		// $this->email->message($message);
+		// $this->email->send();
 	}
+	// this function is for send email to user when document is expired
+	// [data] is array of data that will be sent to user
+	// [data] must have [subject],[message] and [to] key
+	// [data] can have [name] key
+
+
+
+
 
 	// public function view($slug = NULL) {
 	// 	$data['document_item'] = $this->Document_model->get_documents($slug);
