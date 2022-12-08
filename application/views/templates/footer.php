@@ -302,7 +302,7 @@
 
 
 						// var date = new Date(newobj['expired_date']);
-						newobj['date'] = date;
+						// newobj['date'] = date;
 						newobj['status'] = 'aktif';
 						let today = new Date();
 						today.setHours(0, 0, 0, 0);
@@ -318,19 +318,7 @@
 					// console.log(json_object);
 					console.table(rows);
 					console.table(mapOfSheet);
-					// }
-					// $.ajax({
-					// 	url: 'document/import',
-					// 	type: 'POST',
-					// 	data: {
-					// 		data: json_object
-					// 	},
-					// 	success: function(data) {
-					// 		console.log(data);
-					// 		// alert('success');
-					// 		location.reload();
-					// 	}
-					// });
+
 				})
 				var html_select_content = "<label for='option-sheet'>select sheet</label>"
 				html_select_content += "<select class='form-control' id='option-sheet'>";
@@ -350,8 +338,6 @@
 		// load excel file
 		$('#load').click(function() {
 			var sheet = $('#option-sheet').val();
-			// var rows = mapOfSheet[sheet];
-			// add mapOfSheet[sheet] to dataTableRows
 			dataTableRows = dataTableRows.concat(mapOfSheet[sheet]);
 			//load rows to table
 			var usedRows = ["nama_alat", "pabrik_pembuat", "kapasitas", "lokasi", "no_seri", "no_perijinan", "expired_date"];
@@ -398,11 +384,10 @@
 				dataType: 'json',
 				success: function(data) {
 					console.log(data);
-					// alert('success');
 					//then locate to root path /
 					var wb = XLSX.utils.book_new();
 					var ws = XLSX.utils.json_to_sheet(data);
-					XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+					XLSX.utils.book_append_sheet(wb, ws, "reports 1");
 					//write with name document-export-<current date>.xlsx
 					XLSX.writeFile(wb, "document-export-" + new Date().toISOString().slice(0, 10) + ".xlsx");
 				}
