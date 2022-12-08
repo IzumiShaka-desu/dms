@@ -15,6 +15,14 @@ class M_documents extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getDocumentById($id)
+	{
+		$this->db->from('document');
+		$this->db->where('id_document', $id);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
 	public function set_documents($id, $data)
 	{
 		//set ,nama_alat,pabrik,kapasistas,lokasi,no_seri,no_perijinan,expired_date
