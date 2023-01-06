@@ -1,6 +1,11 @@
 <?php
+$recipients = [
+	'shakaaji29@gmail.com',
+	'shakannn29@gmail.com'
+];
 class Document extends CI_Controller
 {
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -191,6 +196,7 @@ class Document extends CI_Controller
 	{
 		// get data from database
 		$item = $this->m_documents->getDocumentById($idDocument);
+
 		$data = array();
 		$data['to'] = 'shakaaji29@gmail.com';
 		$data['subject'] = 'Document has Expired';
@@ -206,10 +212,20 @@ class Document extends CI_Controller
 		$data['message'] .= 'Regards';
 		$data['message'] .= '<br>';
 		$data['message'] .= 'Admin';
-
-
+		$result = false;
+		$recipients = [
+			'ihan.pratama@incoe.astra.co.id',
+			'nonik.purnamasari@incoe.astra.co.id',
+			'ahmad.zaelani@incoe.astra.co.id',
+			'sugiyanto@incoe.astra.co.id'
+		];
+		foreach ($recipients as $val) {
+			$data['to'] = $val;
+			$result = $this->send_mail($data);
+			# code...
+		}
 		// send email
-		if ($this->send_mail($data)) {
+		if ($result) {
 			// show dialog success and redirect to root page
 			echo "<script>alert('Email berhasil dikirim!');window.location.href='" . base_url() . "';</script>";
 		};
@@ -273,7 +289,18 @@ class Document extends CI_Controller
 			"message" => $message,
 			"name" => $name
 		);
-		$this->send_mail($data);
+		$recipients = [
+			'ihan.pratama@incoe.astra.co.id',
+			'nonik.purnamasari@incoe.astra.co.id',
+			'ahmad.zaelani@incoe.astra.co.id',
+			'sugiyanto@incoe.astra.co.id'
+		];
+		foreach ($recipients as $val) {
+			$data['to'] = $val;
+			$result = $this->send_mail($data);
+			# code...
+		}
+		// $this->send_mail($data);
 
 		// $config = array(
 		// 	'protocol'  => 'smtp',
