@@ -58,5 +58,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['home'] = 'document';
 $route['imports'] = 'document/imports';
 $route['add'] = 'document/add';
+$route['delete/(:any)'] = 'document/delete/$1';
+
 $route['upload/(:any)'] = 'document/upload/$1';
 $route['notify/(:any)'] = 'document/sendExpiredEmailNotification/$1';
