@@ -160,6 +160,16 @@ class Document extends CI_Controller
 		$this->load->view('add',);
 		$this->load->view('templates/footer', $data);
 	}
+	public function delete($base64_id)
+	{
+		// if user not loggin redirect to login page
+		if (!$this->session->userdata('logged_in')) {
+			redirect('login');
+		}
+		$id = base64_decode($base64_id);
+		$this->m_documents->delete($id);
+		echo "<script>window.location.href='" . base_url() . "';</script>";
+	}
 	public function upload($id)
 	{
 		// if user not loggin redirect to login page
