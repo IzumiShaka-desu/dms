@@ -115,6 +115,12 @@
  											<i class="fa fa-download"></i>
  										</a>
  									<?php } ?>
+ 									<!-- create button for delete link to /delete/<base64_id> -->
+ 									<a href="<?php echo base_url('delete/' . base64_encode($item['id_document'])); ?>" class="btn btn-sm btn-danger" data-toggle="tooltip" title="Tombol ini digunakan untuk menghapus data">
+ 										<i class="fa fa-trash"></i>
+ 									</a>
+
+
  								</td>
  							</tr>
  						<?php
