@@ -14,7 +14,11 @@ class M_documents extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
-
+	public function delete($id)
+	{
+		$this->db->where('id_document', $id);
+		return $this->db->delete('document');
+	}
 	public function getDocumentById($id)
 	{
 		$this->db->from('document');
