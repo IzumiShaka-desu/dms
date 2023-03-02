@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<!-- User Info -->
 				<div class="content-header-item">
 					<a class="img-link mr-5" href="be_pages_generic_profile.html">
-						<img class="img-avatar img-avatar32" src="assets/media/avatars/avatar15.jpg" alt="">
+						<img class="img-avatar img-avatar32" src="<?= base_url(). 'assets/media/avatars/avatar15.jpg'?>" alt="">
 					</a>
 					<a class="align-middle link-effect text-primary-dark font-w600" href="be_pages_generic_profile.html">John Smith</a>
 				</div>
@@ -300,16 +300,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 	<!-- Sidebar -->
 	<!--
-                Helper classes
+		Helper classes
 
-                Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-                Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-                    If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
+		Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
+		Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
+			If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
 
-                Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
-                Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
-                    - use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
-            -->
+		Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
+		Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
+			- use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
+	-->
 	<nav id="sidebar">
 		<!-- Sidebar Content -->
 		<div class="sidebar-content">
@@ -351,18 +351,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="content-side content-side-full content-side-user px-10 align-parent">
 				<!-- Visible only in mini mode -->
 				<div class="sidebar-mini-visible-b align-v animated fadeIn">
-					<img class="img-avatar img-avatar32" src="assets/media/avatars/avatar15.jpg" alt="">
+					<img class="img-avatar img-avatar32" src="<?= base_url(). 'assets/media/avatars/avatar15.jpg'?>" alt="">
 				</div>
 				<!-- END Visible only in mini mode -->
 
 				<!-- Visible only in normal mode -->
 				<div class="sidebar-mini-hidden-b text-center">
-					<a class="img-link" href="be_pages_generic_profile.html">
-						<img class="img-avatar" src="assets/media/avatars/avatar15.jpg" alt="">
+					<a class="img-link" href="">
+						<img class="img-avatar" src="<?= base_url(). 'assets/media/avatars/avatar15.jpg'?>" alt="">
 					</a>
 					<ul class="list-inline mt-10">
 						<li class="list-inline-item">
-							<a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="be_pages_generic_profile.html"><?php echo $_SESSION['username']; ?> </a>
+							<a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href=""><?php echo $this->session->userdata('username'); ?></a>
 						</li>
 						<li class="list-inline-item">
 							<!-- Layout API, functionality initialized in Template._uiApiLayout() -->
@@ -384,23 +384,438 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<!-- Side Navigation -->
 			<div class="content-side content-side-full">
 				<ul class="nav-main">
-					<!-- <li>
-						<a href="be_pages_dashboard.html"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
-					</li> -->
-					<li class="open">
-						<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document</span></a>
-						<ul>
-							<li>
-								<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
-							</li>
-							<li>
-								<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
-							</li>
-							<li>
-								<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
-							</li>
-						</ul>
-					</li>
+					<?php if($this->session->userdata('akses') == 1){ ?>
+						<li>
+							<a class="active" href="<?= site_url('document');?>"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Riksa Uji</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Lisensi K3L</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('homeLisensi'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('addLisensi'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('importsLisensi'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<!-- <li >
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-table"></i><span class="sidebar-mini-hide">Master Data</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('viewKaryawan'); ?>">Data Karyawan</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('viewShift'); ?>">Data Shift Kerja</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Data Material</a>
+								</li>
+							</ul>
+						</li> -->
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Management K3L</span></a>
+							<ul>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">Manual</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadData'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewData');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">SOP</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataSOP'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataSOP');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IK</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataIK');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IAD K3 & LINGKUNGAN</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataIAD');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">FORM</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataForm'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataForm');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">MSDS & Safety Sign</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataMSDS'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataMSDS');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					<?php }elseif($this->session->userdata('akses') == 2){ ?> 
+						<li>
+							<a class="active" href="<?= site_url('document');?>"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Riksa Uji</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li >
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Lisensi K3L</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('homeLisensi'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('addLisensi'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('importsLisensi'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Management K3L</span></a>
+							<ul>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">SOP</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataSOP'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataSOP');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IK</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataIK');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IAD K3 & LINGKUNGAN</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataIAD');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">FORM</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataForm'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataForm');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">MSDS & Safety Sign</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataMSDS'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataMSDS');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<!-- <li >
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-desktop"></i><span class="sidebar-mini-hide">Produksi</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?= site_url('ProsWWT'); ?>">Input Proses WWT</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('ShowWWT'); ?>">Data Proses WWT</a>
+								</li>
+							</ul>
+						</li> -->
+					<?php }elseif($this->session->userdata('akses') == 3){ ?>
+						<li>
+							<a class="active" href="<?= site_url('document');?>"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Riksa Uji</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li >
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Lisensi K3L</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('homeLisensi'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('addLisensi'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('importsLisensi'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Management K3L</span></a>
+							<ul>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IK</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataIK');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">FORM</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataForm'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataForm');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">MSDS & Safety Sign</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataMSDS'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataMSDS');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					<?php }elseif($this->session->userdata('akses') == 4){ ?>
+						<li>
+							<a class="active" href="<?= site_url('document');?>"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Riksa Uji</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li >
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Lisensi K3L</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('homeLisensi'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('addLisensi'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('importsLisensi'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Management K3L</span></a>
+							<ul>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">FORM</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataForm'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataForm');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">MSDS & Safety Sign</span></a>
+									<ul>
+										<!-- <li>
+											<a class="active" href="<?php echo site_url('uploadDataMSDS'); ?>">Upload Document</a>
+										</li> -->
+										<li>
+											<a class="active" href="<?= site_url('viewDataMSDS');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					<?php }elseif($this->session->userdata('akses') == 5){ ?>
+						<li>
+							<a class="active" href="<?= site_url('document');?>"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Riksa Uji</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('home'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('add'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('imports'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Document Lisensi K3L</span></a>
+							<ul>
+								<li>
+									<a class="active" href="<?php echo site_url('homeLisensi'); ?>">View Documents</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('addLisensi'); ?>">Add Document</a>
+								</li>
+								<li>
+									<a class="active" href="<?php echo site_url('importsLisensi'); ?>">Import Documents</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Management K3L</span></a>
+							<ul>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">Manual</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadData'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewData');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">SOP</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadDataSOP'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewDataSOP');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IK</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadDataIK'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewDataIK');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">IAD K3 & LINGKUNGAN</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadDataIAD'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewDataIAD');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">FORM</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadDataForm'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewDataForm');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+								<li><a class="nav-submenu" data-toggle="nav-submenu"><span class="sidebar-mini-hide">MSDS & Safety Sign</span></a>
+									<ul>
+										<li>
+											<a class="active" href="<?php echo site_url('uploadDataMSDS'); ?>">Upload Document</a>
+										</li>
+										<li>
+											<a class="active" href="<?= site_url('viewDataMSDS');?>">View Document</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+					<?php } ?>
 				</ul>
 			</div>
 			<!-- END Side Navigation -->
@@ -517,7 +932,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fa fa-user d-sm-none"></i>
-						<span class="d-none d-sm-inline-block"><?php echo $_SESSION['username']; ?></span>
+						<!-- <span class="d-none d-sm-inline-block"><?php echo $_SESSION['username']; ?></span> -->
+						<span class="d-none d-sm-inline-block"><?php echo $this->session->userdata('username'); ?></span>
 						<i class="fa fa-angle-down ml-5"></i>
 					</button>
 				</div>

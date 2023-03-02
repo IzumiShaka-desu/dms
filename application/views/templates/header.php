@@ -29,6 +29,10 @@
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="assets/js/plugins/datatables/dataTables.bootstrap4.css">
 
+	<!-- sweetalert -->
+	<script src="<?php echo base_url('assets/js/');?>sweetalert2.all.min.js"></script>
+
+	
 	<!-- Fonts and Codebase framework -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
 	<link rel="stylesheet" id="css-main" href="assets/css/codebase.min.css">

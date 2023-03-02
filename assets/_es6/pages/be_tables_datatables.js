@@ -23,8 +23,8 @@ class BeTableDatatables {
     static initDataTableFull() {
         jQuery('.js-dataTable-full').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
-            pageLength: 8,
-            lengthMenu: [[5, 8, 15, 20], [5, 8, 15, 20]],
+            pageLength: 10,
+            lengthMenu: [[5, 10, 50, 100], [5, 10, 50, 100]],
             autoWidth: false
         });
     }
@@ -37,8 +37,8 @@ class BeTableDatatables {
         jQuery('.js-dataTable-full-pagination').dataTable({
             pagingType: "full_numbers",
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
-            pageLength: 8,
-            lengthMenu: [[5, 8, 15, 20], [5, 8, 15, 20]],
+            pageLength: 10,
+            lengthMenu: [[5, 10, 50, 100], [5, 10, 50, 100]],
             autoWidth: false
         });
     }
@@ -50,8 +50,8 @@ class BeTableDatatables {
     static initDataTableSimple() {
         jQuery('.js-dataTable-simple').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
-            pageLength: 8,
-            lengthMenu: [[5, 8, 15, 20], [5, 8, 15, 20]],
+            pageLength: 10,
+            lengthMenu: [[5, 10, 50, 100], [5, 10, 50, 100]],
             autoWidth: false,
             searching: false,
             oLanguage: {

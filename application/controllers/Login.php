@@ -30,12 +30,24 @@ class Login extends CI_Controller
 			//set session
 			$session_data = array(
 				'username' => $username,
+				'akses' => $result->akses,
 				// 'name' => $result['name'],
 				'logged_in' => true
 			);
 			$this->session->set_userdata($session_data);
 			// redirect('');
 			echo '<script>  window.location.href = "' . base_url() . '"; </script>';
+			if($result->akses == 1){
+				redirect('document');
+			}elseif($result->akses == 2){
+				redirect('document');
+			}elseif($result->akses == 3){
+				redirect('document');
+			}elseif($result->akses == 4){
+				redirect('document');
+			}elseif($result->akses == 5){
+				redirect('document');
+			}
 		} else {
 			//if login failed
 			$this->session->set_flashdata('error', 'Invalid Username or Password');
