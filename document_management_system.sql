@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Nov 29, 2022 at 02:48 AM
--- Server version: 5.7.34
--- PHP Version: 7.4.21
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 02 Mar 2023 pada 04.50
+-- Versi server: 10.4.24-MariaDB
+-- Versi PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,104 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `document`
+-- Struktur dari tabel `berkas`
+--
+
+CREATE TABLE `berkas` (
+  `id_sop` int(11) NOT NULL,
+  `kd_sop` varchar(255) NOT NULL,
+  `no_sop` varchar(255) NOT NULL,
+  `judul_sop` varchar(255) NOT NULL,
+  `nm_sop` varchar(255) NOT NULL,
+  `keterangan_sop` varchar(255) NOT NULL,
+  `tipe_sop` varchar(100) NOT NULL,
+  `ukuran_sop` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `berkas`
+--
+
+INSERT INTO `berkas` (`id_sop`, `kd_sop`, `no_sop`, `judul_sop`, `nm_sop`, `keterangan_sop`, `tipe_sop`, `ukuran_sop`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-SOP-00001', 'SOP-EHS-001', 'SOP DOCUMENT EHS', 'SDA_Term_Of_Reference_FINISH.pdf', 'cek upload sop dok di sistem shaka', '.pdf', 1034.8, '2023-03-02 02:32:40', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `berkas_auditk3l`
+--
+
+CREATE TABLE `berkas_auditk3l` (
+  `id_auditk3l` int(11) NOT NULL,
+  `kd_berkas_auditk3l` varchar(255) NOT NULL,
+  `no_berkas_auditk3l` varchar(255) NOT NULL,
+  `judul_berkas_auditk3l` varchar(255) NOT NULL,
+  `nm_berkas_auditk3l` varchar(255) NOT NULL,
+  `keterangan_berkas_auditk3l` varchar(255) NOT NULL,
+  `tipe_berkas_auditk3l` varchar(100) NOT NULL,
+  `ukuran_berkas_auditk3l` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `berkas_iad`
+--
+
+CREATE TABLE `berkas_iad` (
+  `id_iad` int(11) NOT NULL,
+  `kd_berkas_iad` varchar(255) NOT NULL,
+  `no_berkas_iad` varchar(255) NOT NULL,
+  `judul_berkas_iad` varchar(255) NOT NULL,
+  `nm_berkas_iad` varchar(255) NOT NULL,
+  `keterangan_berkas_iad` varchar(255) NOT NULL,
+  `tipe_berkas_iad` varchar(100) NOT NULL,
+  `ukuran_berkas_iad` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `berkas_iad`
+--
+
+INSERT INTO `berkas_iad` (`id_iad`, `kd_berkas_iad`, `no_berkas_iad`, `judul_berkas_iad`, `nm_berkas_iad`, `keterangan_berkas_iad`, `tipe_berkas_iad`, `ukuran_berkas_iad`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-IAD-00001', 'IAD-EHS-0001', 'Upload Dok IAD 01', 'Tugas_RPL_TOR_-_Nuramalia_Putri_222101286.docx', 'CEK IAD Upload di dms shaka', '.docx', 1513.59, '2023-03-02 02:57:47', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `berkas_msds`
+--
+
+CREATE TABLE `berkas_msds` (
+  `id_msds` int(11) NOT NULL,
+  `kd_berkas_msds` varchar(255) NOT NULL,
+  `no_berkas_msds` varchar(255) NOT NULL,
+  `judul_berkas_msds` varchar(255) NOT NULL,
+  `nm_berkas_msds` varchar(255) NOT NULL,
+  `keterangan_berkas_msds` varchar(255) NOT NULL,
+  `tipe_berkas_msds` varchar(100) NOT NULL,
+  `ukuran_berkas_msds` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `berkas_msds`
+--
+
+INSERT INTO `berkas_msds` (`id_msds`, `kd_berkas_msds`, `no_berkas_msds`, `judul_berkas_msds`, `nm_berkas_msds`, `keterangan_berkas_msds`, `tipe_berkas_msds`, `ukuran_berkas_msds`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-MSDS-00001', 'MSDS-EHS-0001', 'TES UPLOAD MSDS', 'document-export-2023-02-28.xlsx', 'cek upload msds di dms shaka', '.xlsx', 15.41, '2023-03-02 02:58:53', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `document`
 --
 
 CREATE TABLE `document` (
@@ -38,87 +135,409 @@ CREATE TABLE `document` (
   `expired_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `document`
+-- Struktur dari tabel `document_lisensi`
 --
 
-INSERT INTO `document` (`id_document`, `nama_alat`, `pabrik_pembuat`, `kapasitas`, `lokasi`, `no_seri`, `no_perijinan`, `expired_date`) VALUES
-(1, 'Fire Alarm Systems', '', '', 'Area Pabrik', '', '566.10/396/UPTD-WIL.', '2023-04-06'),
-(2, 'Instalasi Listrik', '', '20 Kv/ 380 V/ 220 V', '', '', '566.7/396/UPTD-WIL.I', '2023-04-09'),
-(3, 'Generating Set/ Motor Diesel', 'PERKINS', '350 Kva', '', 'TGBF5031 U14969W', '566.3/9764/UPTD-WIL.', '2022-11-17'),
-(4, 'Penyalur Petir ', 'Viking V. 120', '', 'Gedung A dan B', '', '566.8/1805/UPTD-WIL.', '2023-08-25'),
-(5, 'Penyalur Petir ', 'Viking V. 6', '', 'Formation C', '', '566.8/1804/UPTD-WIL.', '2023-08-25'),
-(6, 'Tangki Soda Caustic', 'PT Sinergi Mekatrotama Indonesia', '10.000 liter', 'WWT', 'KE-1208-T12-006', '566.2/4025/UPTD-WIL.', '2022-10-30'),
-(7, 'Tangki Solar/Bejana Tekanan', '', '500 liter', 'MTN', 'TS-500', '566.3/4068/UPTD/WIL.', '2023-08-25'),
-(8, 'Bejana Tekanan / Air Receiver Tank', 'PT. Daya Perkasa Teknik', '2.000 liter', 'Gedung D', '02/DPT/IV/2015', '566.2/1539/UPTD/WIL.', '2023-03-24'),
-(9, 'Bejana Tekanan / Air Pressure Air Tank', 'PT. Satotek Dwimitri Indonesia; PT. Mitraplus Filter', '1 m3', 'Gedung G ', 'ART 30', '566.2/1538/UPTD-WIL/', '2023-03-24'),
-(10, 'Bejana Tekanan / Air Pressure Tank', 'Penta Tank', '1.000 liter', 'Gedung E2', '9510/KP/APT/XI/17', '566.2/6153/UPTD-WIL.', '2023-11-17'),
-(11, 'Mesin Melting Pot Lead Powder Ball Mill 1', 'HANGSU SANHUAN INDUSTRI', '', 'Ruang Melting Pot Lead Po', 'SH x 11 - 1048', '566.3/9448/UPTD-WIL.', '2023-11-09'),
-(12, 'Mesin Melting Pot Cos Assy Line 4', 'BATEK MAKINA SANAYI VE TIC., LTD', '', 'Ruang COS', 'T 240160', '566.3/9762/JPTD-WIL.', '2022-11-17'),
-(13, 'Mesin Melting Pot Cos Assy Line 1', 'BATEK MAKINA SANAYI VE TIC., LTD', '', 'Ruang COS', 'MC 01', '566.3/9442/UPTD-WIL.', '2023-11-09'),
-(14, 'Mesin Melting Pot Cos MCB', 'GROWN AUTOMATION CO., LTD', '', 'Ruang Melting POT COS MCB', 'F351 COS', '566.3/9447/UPTD-WIL.', '2023-11-11'),
-(15, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '10151113231', '566.3/7309/UPTD-WIL.', '2023-08-03'),
-(16, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1202113088', '566.3/7312/UPTD-WIL.', '2023-08-03'),
-(17, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1452113073', '566.3/7310/UPTD-WIL.', '2023-08-03'),
-(18, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1202113081', '566.3/7313/UPTD-WIL.', '2023-08-03'),
-(19, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '145123062', '566.3/7316/UPTD-WIL.', '2023-08-03'),
-(20, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1452113064', '566.3/7314/UPTD-WIL.', '2023-08-03'),
-(21, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '131100110171', '566.3/9450/UPTD-WIL.', '2023-11-09'),
-(22, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '11452113070', '566.3/7315/UPTD-WIL.', '2023-08-03'),
-(23, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1452113061', '566.3/7317/UPTD-WIL.', '2023-08-03'),
-(24, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1393113409', '566.3/7634/UPTD-WIL.', '2023-08-03'),
-(25, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', 'MC11MC12', '566.3/9763/UPTD-WIL.', '2022-11-17'),
-(26, 'Mesin Melting Pot Grid Casting', 'PT. SUKSES JAYA', '', 'Ruang Melting Pot Grid Ca', '1426113124', '566.3/7311/UPTD-WIL.', '2023-08-03'),
-(27, 'Forklift/ Reach Truck', 'SUMITOMO NACCO MATERIALS HANDLING CO., LTD', '1.900 kg', 'WH Bawah', 'R2B-03495', '566.4/7855/UPTD-WIL.', '2021-07-20'),
-(28, 'Reach Truck', 'TOYOTA INDUSTRIES CORPORATION', '1800 kg', 'Area Warehouse', '7FBR18 - 15584', '556.4/3646/UPTD-WIL.', '2023-02-27'),
-(29, 'Reach Truck', 'TOYOTA INDUSTRIES CORPORATION', '1950 kg', 'Area Assembling', '7FBE20 - 54395', '556.4/3650/UPTD-WIL.', '2023-02-27'),
-(30, 'Chain Hoist Crane', 'SAMSUNG MACHINERY CO., LTD', '500 kg', 'Grid Casting Kanan', '1205206', '566.4/10929/UPTD-WIL', '2023-09-16'),
-(31, 'Chain Hoist Crane', 'KITO', '1.000 kg', 'Ballmill gd E', '028178', '566.4/10929/UPTD-WIL', '2023-09-16'),
-(32, 'Chain Hoist Crane', 'SAMSUNG MACHINERY CO., LTD', '500 kg', 'Ballmill Kiri B', '1110226', '566.4/15022/UPTD-WIL', '2023-09-16'),
-(33, 'Overhead Crane', 'DEMAG', '3200 kg', 'Punch Grid E', '94815904', '566.4/16315/UPTD-WIL', '2022-11-17'),
-(34, 'Overhead Crane', 'KITO INDONESIA', '3.000 kg', 'Formation C B2 ', '00140176', '566.4/16435/UPTD-WIL', '2023-11-11'),
-(35, 'Overhead Crane', 'KITO INDONESIA', '3.000 kg', 'Formation C B1', '001440174', '566.4/16437/UPTD-WIL', '2023-11-11'),
-(36, 'Overhead Crane', 'KITO INDONESIA', '3.000 kg', 'Formation T 2', '00143915', '566.4/16436/UPTD-WIL', '2023-11-11'),
-(37, 'Overhead Crane', 'KITO INDONESIA', '3.000 kg', 'Formation C T1', '00143914', '566.4/16434/UPTD_WIL', '2023-11-11'),
-(38, 'Jib Crane', 'KITO', '500 kg', 'AMB 2 COS', '248990', '566.4/16314/UPTD-WIL', '2022-11-17'),
-(39, 'Jib Crane', 'GEMAG', '1.000 kg', 'AMB 1 COS', '941', '566.4/16312/UPTD-WIL', '2022-11-17'),
-(40, 'Electric Hoist Crane', 'SAMSUNG MACHINERY CO., LTD', '500 kg', 'Grid Casting Kiri', '1205211 /  1101125', '566.4/10929/UPTD-WIL', '2023-09-16'),
-(41, 'Electric Hoist Crane', 'KITO', '500 kg', 'Ballmill', '244806', '566.4/16313/UPTD-WIL', '2022-11-17'),
-(42, 'Electric Hoist Crane', 'KITO', '1.000 kg', 'Pasting E', '044462 / 1702155', '566.4/10929/UPTD-WIL', '2023-09-16'),
-(43, 'Electric Hoist Crane', 'KITO', '3.000 kg', 'Formation F1', '00098002', '566.4/16432/UPTD-WIL', '2023-11-11'),
-(44, 'Single Girder Electric Semi Gantry Crane', 'DEMAG', '2.500 kg', 'Gedung D', '946 225 73', '566.4/16433/UPTD-WIL', '2023-10-07'),
-(45, 'Single Grider Electric Semi Gantry Crane', 'DEMAG', '2.500 kg', 'Gedung G ', '946 225 74', '566.4/16431/UPTD-WIL', '2023-11-11'),
-(46, 'Penyalur Petir Prevectron 3S 60.R125M', '', '', 'Gedung A dan B', '', '566.8/1212/UPTD-WIL.', '2023-06-04'),
-(47, 'Penyalur Petir Prevectron 3S 60.R125M', '', '', 'Formation C', '', '566.8/1213/UPTD-WIL.', '2023-06-04'),
-(48, 'Forklift/ reachtruck ', 'SUMITOMO NACCO MATERIALS HANDLING CO., LTD', '', '', '', '', '0000-00-00'),
-(49, 'Volume Tangki T500L', '', '362 L', '', '', '', '0000-00-00'),
-(50, 'Volume Tangki T10KL', '', '2037 L', '', '', '', '0000-00-00'),
-(51, 'Bejana Tekanan', '', '10.000 liter', '', '', '5663/598/UPTD-WIL.11', '2021-02-27'),
-(52, 'nama', 'pabrik', 'kapasitas', 'lokasi', 'n344324', '2342423dsf', '2022-11-20'),
-(53, 'nama', 'panrik', 'kapa', 'lok', '34345i', 'n23423', '2022-11-20'),
-(54, 'kaoskoa', 'dnfjksn', 'dsnkjfn', 'ndskjnf', '9i45', 'nnds93', '2022-11-20'),
-(55, 'jefk', 'jhkjdfh', 'khkh', 'kkj', 'hk', 'k', '0000-00-00'),
-(56, 'nawa', 'nawa', 'kapa', 'lok', '39438924', 'dsf939848', '2022-12-20');
+CREATE TABLE `document_lisensi` (
+  `id_document_lisensi` int(11) NOT NULL,
+  `jenis_lisensi` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `seksi` varchar(255) NOT NULL,
+  `npk` varchar(50) NOT NULL,
+  `no_sio` varchar(255) NOT NULL,
+  `masa_berlaku` date NOT NULL,
+  `status` enum('active','processing','expired','') NOT NULL,
+  `filename` varchar(90) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `form`
+--
+
+CREATE TABLE `form` (
+  `id_form` int(11) NOT NULL,
+  `kd_form` varchar(255) NOT NULL,
+  `no_form` varchar(255) NOT NULL,
+  `judul_form` varchar(255) NOT NULL,
+  `nm_form` varchar(255) NOT NULL,
+  `keterangan_form` varchar(255) NOT NULL,
+  `tipe_form` varchar(100) NOT NULL,
+  `ukuran_form` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `form`
+--
+
+INSERT INTO `form` (`id_form`, `kd_form`, `no_form`, `judul_form`, `nm_form`, `keterangan_form`, `tipe_form`, `ukuran_form`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-FORM-00001', 'FORM-EHS-0001', 'Dokumen Form upload 01', 'Form_Penilaian_Penjurian_SGA.xlsx', 'tes upload form dok di dms shaka', '.xlsx', 37.93, '2023-03-02 02:58:19', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ik`
+--
+
+CREATE TABLE `ik` (
+  `id_ik` int(11) NOT NULL,
+  `kd_ik` varchar(255) NOT NULL,
+  `no_ik` varchar(255) NOT NULL,
+  `judul_ik` varchar(255) NOT NULL,
+  `nm_ik` varchar(255) NOT NULL,
+  `keterangan_ik` varchar(255) NOT NULL,
+  `tipe_ik` varchar(100) NOT NULL,
+  `ukuran_ik` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `ik`
+--
+
+INSERT INTO `ik` (`id_ik`, `kd_ik`, `no_ik`, `judul_ik`, `nm_ik`, `keterangan_ik`, `tipe_ik`, `ukuran_ik`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-IK-00001', 'IK-EHS-0001', 'Upload Dokumen IK 01', 'POV_Dashboard_by_Office_People.docx', 'tes upload ik di sistem dms shaka', '.docx', 366.71, '2023-03-02 02:36:11', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `karyawan`
+--
+
+CREATE TABLE `karyawan` (
+  `id_karyawan` int(11) NOT NULL,
+  `nik` varchar(10) NOT NULL,
+  `nm_karyawan` varchar(255) NOT NULL,
+  `foto_karyawan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `manual`
+--
+
+CREATE TABLE `manual` (
+  `id_manual` int(11) NOT NULL,
+  `kd_manual` varchar(255) NOT NULL,
+  `no_manual` varchar(255) NOT NULL,
+  `judul_manual` varchar(255) NOT NULL,
+  `nm_manual` varchar(255) NOT NULL,
+  `keterangan_manual` varchar(255) NOT NULL,
+  `tipe_manual` varchar(100) NOT NULL,
+  `ukuran_manual` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `manual`
+--
+
+INSERT INTO `manual` (`id_manual`, `kd_manual`, `no_manual`, `judul_manual`, `nm_manual`, `keterangan_manual`, `tipe_manual`, `ukuran_manual`, `created_at`, `updated_at`) VALUES
+(1, 'DOC-MAN-00001', 'MAN-EHS-001', 'Dokumen manual 01', 'P7_RPL.pdf', 'Cek upload manual dms shaka', '.pdf', 1569.19, '2023-03-02 02:28:20', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `material`
+--
+
+CREATE TABLE `material` (
+  `id_material` int(11) NOT NULL,
+  `material` varchar(255) NOT NULL,
+  `detail_material` varchar(255) NOT NULL,
+  `satuan` varchar(50) NOT NULL,
+  `jml_stok` varchar(255) NOT NULL,
+  `status` enum('full','aman','limitstok') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pemakaian_material`
+--
+
+CREATE TABLE `pemakaian_material` (
+  `id` int(11) NOT NULL,
+  `material_id` int(11) NOT NULL,
+  `nm_user` varchar(255) NOT NULL,
+  `jml_pemakaian` varchar(255) NOT NULL,
+  `tanggal_pemakaian` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `prosedur`
+--
+
+CREATE TABLE `prosedur` (
+  `id_prosedur` int(11) NOT NULL,
+  `kd_prosedur` varchar(255) NOT NULL,
+  `no_prosedur` varchar(255) NOT NULL,
+  `judul_prosedur` varchar(255) NOT NULL,
+  `nm_prosedur` varchar(255) NOT NULL,
+  `keterangan_prosedur` varchar(255) NOT NULL,
+  `tipe_prosedur` varchar(100) NOT NULL,
+  `ukuran_prosedur` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `shift`
+--
+
+CREATE TABLE `shift` (
+  `id_shift` int(11) NOT NULL,
+  `nm_shift` varchar(50) NOT NULL,
+  `waktu_shift` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `shift`
+--
+
+INSERT INTO `shift` (`id_shift`, `nm_shift`, `waktu_shift`, `created_at`, `updated_at`) VALUES
+(1, 'Shift 1', '07.00 - 16.30', '2023-02-14 01:39:56', '2023-02-21 09:00:12'),
+(2, 'Shift 2', '16.30 - 00.30', '2023-02-14 01:39:56', NULL),
+(3, 'Shift 3', '00.30 - 07.30', '2023-02-14 01:40:22', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(25) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `password` varchar(90) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `akses` int(3) NOT NULL COMMENT '1headdept,2kasie,3kasubsie,4member,5officer_ehs',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `name`, `password`, `id_pengguna`, `akses`, `created_at`, `updated_at`) VALUES
+(1, 'noniks', 'Nonik Suhaya ', 'tes123', 7, 5, '2023-02-24 04:26:20', '2023-02-24 04:34:45'),
+(2, 'dedir', 'Dedi Ruhimat', 'tes000', 8, 1, '2023-02-24 04:26:20', NULL),
+(3, 'ihanp', 'Ihan Pratama', 'tes212', 2, 4, '2023-02-24 04:26:20', NULL),
+(4, 'subkhan', 'Subkhan', 'tes999', 6, 2, '2023-02-24 04:26:20', NULL),
+(5, 'fiqri', 'Muhamad Fiqri Kurnia', 'cek2402', 5, 3, '2023-02-24 04:34:31', NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `document`
+-- Indeks untuk tabel `berkas`
+--
+ALTER TABLE `berkas`
+  ADD PRIMARY KEY (`id_sop`);
+
+--
+-- Indeks untuk tabel `berkas_auditk3l`
+--
+ALTER TABLE `berkas_auditk3l`
+  ADD PRIMARY KEY (`id_auditk3l`);
+
+--
+-- Indeks untuk tabel `berkas_iad`
+--
+ALTER TABLE `berkas_iad`
+  ADD PRIMARY KEY (`id_iad`);
+
+--
+-- Indeks untuk tabel `berkas_msds`
+--
+ALTER TABLE `berkas_msds`
+  ADD PRIMARY KEY (`id_msds`);
+
+--
+-- Indeks untuk tabel `document`
 --
 ALTER TABLE `document`
   ADD PRIMARY KEY (`id_document`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indeks untuk tabel `document_lisensi`
+--
+ALTER TABLE `document_lisensi`
+  ADD PRIMARY KEY (`id_document_lisensi`);
+
+--
+-- Indeks untuk tabel `form`
+--
+ALTER TABLE `form`
+  ADD PRIMARY KEY (`id_form`);
+
+--
+-- Indeks untuk tabel `ik`
+--
+ALTER TABLE `ik`
+  ADD PRIMARY KEY (`id_ik`);
+
+--
+-- Indeks untuk tabel `karyawan`
+--
+ALTER TABLE `karyawan`
+  ADD PRIMARY KEY (`id_karyawan`);
+
+--
+-- Indeks untuk tabel `manual`
+--
+ALTER TABLE `manual`
+  ADD PRIMARY KEY (`id_manual`);
+
+--
+-- Indeks untuk tabel `material`
+--
+ALTER TABLE `material`
+  ADD PRIMARY KEY (`id_material`);
+
+--
+-- Indeks untuk tabel `pemakaian_material`
+--
+ALTER TABLE `pemakaian_material`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `constraint_pemakaian` (`material_id`);
+
+--
+-- Indeks untuk tabel `prosedur`
+--
+ALTER TABLE `prosedur`
+  ADD PRIMARY KEY (`id_prosedur`);
+
+--
+-- Indeks untuk tabel `shift`
+--
+ALTER TABLE `shift`
+  ADD PRIMARY KEY (`id_shift`);
+
+--
+-- Indeks untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`),
+  ADD KEY `constraint_user` (`id_pengguna`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `document`
+-- AUTO_INCREMENT untuk tabel `berkas`
+--
+ALTER TABLE `berkas`
+  MODIFY `id_sop` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `berkas_auditk3l`
+--
+ALTER TABLE `berkas_auditk3l`
+  MODIFY `id_auditk3l` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `berkas_iad`
+--
+ALTER TABLE `berkas_iad`
+  MODIFY `id_iad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `berkas_msds`
+--
+ALTER TABLE `berkas_msds`
+  MODIFY `id_msds` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `document`
 --
 ALTER TABLE `document`
-  MODIFY `id_document` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_document` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `document_lisensi`
+--
+ALTER TABLE `document_lisensi`
+  MODIFY `id_document_lisensi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `form`
+--
+ALTER TABLE `form`
+  MODIFY `id_form` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `ik`
+--
+ALTER TABLE `ik`
+  MODIFY `id_ik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `karyawan`
+--
+ALTER TABLE `karyawan`
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `manual`
+--
+ALTER TABLE `manual`
+  MODIFY `id_manual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `material`
+--
+ALTER TABLE `material`
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pemakaian_material`
+--
+ALTER TABLE `pemakaian_material`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `prosedur`
+--
+ALTER TABLE `prosedur`
+  MODIFY `id_prosedur` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `shift`
+--
+ALTER TABLE `shift`
+  MODIFY `id_shift` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
